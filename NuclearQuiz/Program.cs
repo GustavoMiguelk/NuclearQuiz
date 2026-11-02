@@ -26,6 +26,7 @@ while (true)
     Console.WriteLine("2 - Listar todas as perguntas");
     Console.WriteLine("3 - Buscar por categoria");
     Console.WriteLine("4 - Buscar por trecho do enunciado");
+    Console.WriteLine("5 - Jogar (5 perguntas sorteadas)");
     Console.WriteLine("0 - Sair");
     Console.Write("Escolha: ");
 
@@ -46,6 +47,9 @@ while (true)
                 break;
             case "4":
                 Exibir(service.BuscarPorTexto(Ler("Trecho do enunciado: ")));
+                break;
+            case "5":
+                QuizJogo.Jogar(service.Sortear(5));
                 break;
             case "0":
                 Console.WriteLine("Ate logo!");

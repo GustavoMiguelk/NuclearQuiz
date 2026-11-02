@@ -24,6 +24,15 @@ public class PerguntaService
         return _repositorio.ListarTodas();
     }
 
+    public List<Pergunta> Sortear(int quantidade)
+    {
+        return _repositorio
+            .ListarTodas()
+            .OrderBy(_ => Random.Shared.Next())
+            .Take(quantidade)
+            .ToList();
+    }
+
     public List<Pergunta> BuscarPorCategoria(string categoria)
     {
         var termo = Texto.Normalizar(categoria);
