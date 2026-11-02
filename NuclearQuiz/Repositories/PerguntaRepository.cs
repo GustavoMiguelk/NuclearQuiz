@@ -35,6 +35,29 @@ public class PerguntaRepository
             .ToList();
     }
 
+    public List<Pergunta> ListarTodas()
+    {
+        return ConsultaBase()
+            .OrderBy(p => p.Id)
+            .ToList();
+    }
+
+    public List<Pergunta> BuscarPorCategoria(string termo)
+    {
+        return ConsultaBase()
+            .Where(p => p.Conteudo.Categoria.Nome.ToLower().Contains(termo))
+            .OrderBy(p => p.Id)
+            .ToList();
+    }
+
+    public List<Pergunta> BuscarPorTexto(string termo)
+    {
+        return ConsultaBase()
+            .Where(p => p.Enunciado.ToLower().Contains(termo))
+            .OrderBy(p => p.Id)
+            .ToList();
+    }
+
     public void Adicionar(Pergunta pergunta)
     {
         try
@@ -64,5 +87,13 @@ public class PerguntaRepository
         {
             _db.Database.CloseConnection();
         }
+    }
+
+    private IQueryable<Pergunta> ConsultaBase()
+    {
+        return _db.Perguntas
+            .AsNoTracking()
+            .Include(p => p.Conteudo)
+            .ThenInclude(c => c.Categoria);
     }
 }

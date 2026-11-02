@@ -19,6 +19,33 @@ public class PerguntaService
         return _repositorio.ListarConteudos();
     }
 
+    public List<Pergunta> Listar()
+    {
+        return _repositorio.ListarTodas();
+    }
+
+    public List<Pergunta> BuscarPorCategoria(string categoria)
+    {
+        var termo = Texto.Normalizar(categoria);
+        if (string.IsNullOrEmpty(termo))
+        {
+            throw new ValidacaoException(["Informe a categoria a buscar."]);
+        }
+
+        return _repositorio.BuscarPorCategoria(termo);
+    }
+
+    public List<Pergunta> BuscarPorTexto(string texto)
+    {
+        var termo = Texto.Normalizar(texto);
+        if (string.IsNullOrEmpty(termo))
+        {
+            throw new ValidacaoException(["Informe o texto a buscar."]);
+        }
+
+        return _repositorio.BuscarPorTexto(termo);
+    }
+
     public Pergunta Cadastrar(Pergunta nova)
     {
         nova.Normalizar();
